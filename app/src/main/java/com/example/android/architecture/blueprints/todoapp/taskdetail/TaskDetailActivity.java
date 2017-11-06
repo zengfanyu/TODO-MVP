@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 
 import com.example.android.architecture.blueprints.todoapp.Injection;
 import com.example.android.architecture.blueprints.todoapp.R;
@@ -29,6 +30,7 @@ import com.example.android.architecture.blueprints.todoapp.util.ActivityUtils;
  * Displays task details screen.
  */
 public class TaskDetailActivity extends AppCompatActivity {
+    private static final String TAG = "TODO-->TasksDetailA";
 
     public static final String EXTRA_TASK_ID = "TASK_ID";
 
@@ -37,12 +39,12 @@ public class TaskDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.taskdetail_act);
-
+        Log.i(TAG, "onCreate ");
         // Set up the toolbar.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
-        if (ab!=null) {
+        if (ab != null) {
             ab.setDisplayHomeAsUpEnabled(true);
             ab.setDisplayShowHomeEnabled(true);
         }
@@ -69,6 +71,7 @@ public class TaskDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
+        Log.i(TAG, "onSupportNavigateUp " );
         onBackPressed();
         return true;
     }

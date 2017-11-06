@@ -163,7 +163,7 @@ public class TasksFragment extends Fragment implements TasksContract.View {
                 mPresenter.loadTasks(false);
             }
         });
-        //表明这个Activity想要参与到填充选项菜单中
+        //表明这个Activity想要参与到填充选项菜单中 设置为True之后,才会去调用 onCreateOptionMenu
         setHasOptionsMenu(true);
 
         return root;
@@ -195,7 +195,7 @@ public class TasksFragment extends Fragment implements TasksContract.View {
     }
 
     /**
-     * filter menu 的弹出选择框
+     * filter menu 的弹出选择框,用于设置当前要展示的Task的Type,设置完了之后,马上就要通知 Presenter 重新加载数据
      */
     @Override
     public void showFilteringPopUpMenu() {

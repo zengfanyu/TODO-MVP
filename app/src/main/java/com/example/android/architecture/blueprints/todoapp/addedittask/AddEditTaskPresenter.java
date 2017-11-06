@@ -18,6 +18,7 @@ package com.example.android.architecture.blueprints.todoapp.addedittask;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.example.android.architecture.blueprints.todoapp.data.Task;
 import com.example.android.architecture.blueprints.todoapp.data.source.TasksDataSource;
@@ -30,6 +31,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class AddEditTaskPresenter implements AddEditTaskContract.Presenter,
         TasksDataSource.GetTaskCallback {
+
+    private static final String TAG = "TODO-->AddEditTasksP";
 
     @NonNull
     private final TasksDataSource mTasksRepository;
@@ -52,6 +55,7 @@ public class AddEditTaskPresenter implements AddEditTaskContract.Presenter,
      */
     public AddEditTaskPresenter(@Nullable String taskId, @NonNull TasksDataSource tasksRepository,
             @NonNull AddEditTaskContract.View addTaskView, boolean shouldLoadDataFromRepo) {
+        Log.i(TAG, "AddEditTaskPresenter " );
         mTaskId = taskId;
         mTasksRepository = checkNotNull(tasksRepository);
         mAddTaskView = checkNotNull(addTaskView);
@@ -62,6 +66,7 @@ public class AddEditTaskPresenter implements AddEditTaskContract.Presenter,
 
     @Override
     public void start() {
+        Log.i(TAG, "start " );
         if (!isNewTask() && mIsDataMissing) {
             populateTask();
         }
@@ -69,6 +74,7 @@ public class AddEditTaskPresenter implements AddEditTaskContract.Presenter,
 
     @Override
     public void saveTask(String title, String description) {
+        Log.i(TAG, "saveTask " );
         if (isNewTask()) {
             createTask(title, description);
         } else {
@@ -78,6 +84,7 @@ public class AddEditTaskPresenter implements AddEditTaskContract.Presenter,
 
     @Override
     public void populateTask() {
+        Log.i(TAG, "populateTask " );
         if (isNewTask()) {
             throw new RuntimeException("populateTask() was called but task is new.");
         }
@@ -86,6 +93,7 @@ public class AddEditTaskPresenter implements AddEditTaskContract.Presenter,
 
     @Override
     public void onTaskLoaded(Task task) {
+        Log.i(TAG, "onTaskLoaded " );
         // The view may not be able to handle UI updates anymore
         if (mAddTaskView.isActive()) {
             mAddTaskView.setTitle(task.getTitle());
@@ -96,6 +104,7 @@ public class AddEditTaskPresenter implements AddEditTaskContract.Presenter,
 
     @Override
     public void onDataNotAvailable() {
+        Log.i(TAG, "onDataNotAvailable " );
         // The view may not be able to handle UI updates anymore
         if (mAddTaskView.isActive()) {
             mAddTaskView.showEmptyTaskError();
@@ -104,6 +113,7 @@ public class AddEditTaskPresenter implements AddEditTaskContract.Presenter,
 
     @Override
     public boolean isDataMissing() {
+        Log.i(TAG, "isDataMissing " );
         return mIsDataMissing;
     }
 
@@ -114,9 +124,12 @@ public class AddEditTaskPresenter implements AddEditTaskContract.Presenter,
     private void createTask(String title, String description) {
         Task newTask = new Task(title, description);
         if (newTask.isEmpty()) {
+            //既没有填 title 也没有填 description ,就会让 View 层展示错误
             mAddTaskView.showEmptyTaskError();
         } else {
+            //存Model层
             mTasksRepository.saveTask(newTask);
+            //View 层展示
             mAddTaskView.showTasksList();
         }
     }

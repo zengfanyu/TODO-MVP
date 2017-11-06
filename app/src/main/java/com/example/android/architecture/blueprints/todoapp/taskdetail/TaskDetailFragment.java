@@ -24,6 +24,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -45,7 +46,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Main UI for the task detail screen.
  */
 public class TaskDetailFragment extends Fragment implements TaskDetailContract.View {
-
+    private static final String TAG = "TODO-->TaskDetailF";
     @NonNull
     private static final String ARGUMENT_TASK_ID = "TASK_ID";
 
@@ -68,18 +69,25 @@ public class TaskDetailFragment extends Fragment implements TaskDetailContract.V
         return fragment;
     }
 
+    public TaskDetailFragment() {
+        Log.i(TAG, "TaskDetailFragment ");
+    }
+
     @Override
     public void onResume() {
         super.onResume();
+        Log.i(TAG, "onResume ");
         mPresenter.start();
     }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.i(TAG, "onCreateView ");
         View root = inflater.inflate(R.layout.taskdetail_frag, container, false);
+
         setHasOptionsMenu(true);
+
         mDetailTitle = (TextView) root.findViewById(R.id.task_detail_title);
         mDetailDescription = (TextView) root.findViewById(R.id.task_detail_description);
         mDetailCompleteStatus = (CheckBox) root.findViewById(R.id.task_detail_complete);
@@ -100,11 +108,13 @@ public class TaskDetailFragment extends Fragment implements TaskDetailContract.V
 
     @Override
     public void setPresenter(@NonNull TaskDetailContract.Presenter presenter) {
+        Log.i(TAG, "setPresenter ");
         mPresenter = checkNotNull(presenter);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Log.i(TAG, "onOptionsItemSelected ");
         switch (item.getItemId()) {
             case R.id.menu_delete:
                 mPresenter.deleteTask();
@@ -117,11 +127,13 @@ public class TaskDetailFragment extends Fragment implements TaskDetailContract.V
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        Log.i(TAG, "onCreateOptionsMenu ");
         inflater.inflate(R.menu.taskdetail_fragment_menu, menu);
     }
 
     @Override
     public void setLoadingIndicator(boolean active) {
+        Log.i(TAG, "setLoadingIndicator ");
         if (active) {
             mDetailTitle.setText("");
             mDetailDescription.setText(getString(R.string.loading));
@@ -130,22 +142,26 @@ public class TaskDetailFragment extends Fragment implements TaskDetailContract.V
 
     @Override
     public void hideDescription() {
+        Log.i(TAG, "hideDescription ");
         mDetailDescription.setVisibility(View.GONE);
     }
 
     @Override
     public void hideTitle() {
+        Log.i(TAG, "hideTitle ");
         mDetailTitle.setVisibility(View.GONE);
     }
 
     @Override
     public void showDescription(@NonNull String description) {
+        Log.i(TAG, "showDescription ");
         mDetailDescription.setVisibility(View.VISIBLE);
         mDetailDescription.setText(description);
     }
 
     @Override
     public void showCompletionStatus(final boolean complete) {
+        Log.i(TAG, "showCompletionStatus ");
         Preconditions.checkNotNull(mDetailCompleteStatus);
 
         mDetailCompleteStatus.setChecked(complete);
@@ -164,6 +180,7 @@ public class TaskDetailFragment extends Fragment implements TaskDetailContract.V
 
     @Override
     public void showEditTask(@NonNull String taskId) {
+        Log.i(TAG, "showEditTask ");
         Intent intent = new Intent(getContext(), AddEditTaskActivity.class);
         intent.putExtra(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID, taskId);
         startActivityForResult(intent, REQUEST_EDIT_TASK);
@@ -171,23 +188,27 @@ public class TaskDetailFragment extends Fragment implements TaskDetailContract.V
 
     @Override
     public void showTaskDeleted() {
+        Log.i(TAG, "showTaskDeleted ");
         getActivity().finish();
     }
 
     @Override
     public void showTaskMarkedComplete() {
+        Log.i(TAG, "showTaskMarkedComplete ");
         Snackbar.make(getView(), getString(R.string.task_marked_complete), Snackbar.LENGTH_LONG)
                 .show();
     }
 
     @Override
     public void showTaskMarkedActive() {
+        Log.i(TAG, "showTaskMarkedActive ");
         Snackbar.make(getView(), getString(R.string.task_marked_active), Snackbar.LENGTH_LONG)
                 .show();
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.i(TAG, "onActivityResult ");
         if (requestCode == REQUEST_EDIT_TASK) {
             // If the task was edited successfully, go back to the list.
             if (resultCode == Activity.RESULT_OK) {
@@ -198,18 +219,21 @@ public class TaskDetailFragment extends Fragment implements TaskDetailContract.V
 
     @Override
     public void showTitle(@NonNull String title) {
+        Log.i(TAG, "showTitle ");
         mDetailTitle.setVisibility(View.VISIBLE);
         mDetailTitle.setText(title);
     }
 
     @Override
     public void showMissingTask() {
+        Log.i(TAG, "showMissingTask ");
         mDetailTitle.setText("");
         mDetailDescription.setText(getString(R.string.no_data));
     }
 
     @Override
     public boolean isActive() {
+        Log.i(TAG, "isActive ");
         return isAdded();
     }
 

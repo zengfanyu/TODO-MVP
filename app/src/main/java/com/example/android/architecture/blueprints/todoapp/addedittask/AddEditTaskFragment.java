@@ -23,6 +23,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class AddEditTaskFragment extends Fragment implements AddEditTaskContract.View {
 
+    private static final String TAG = "TODO-->AddEditTasksF";
+
     public static final String ARGUMENT_EDIT_TASK_ID = "EDIT_TASK_ID";
 
     private AddEditTaskContract.Presenter mPresenter;
@@ -50,24 +53,27 @@ public class AddEditTaskFragment extends Fragment implements AddEditTaskContract
     }
 
     public AddEditTaskFragment() {
+        Log.i(TAG, "AddEditTaskFragment ");
         // Required empty public constructor
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        Log.i(TAG, "onResume ");
         mPresenter.start();
     }
 
     @Override
     public void setPresenter(@NonNull AddEditTaskContract.Presenter presenter) {
         mPresenter = checkNotNull(presenter);
+        Log.i(TAG, "setPresenter ");
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
+        Log.i(TAG, "onActivityCreated ");
         FloatingActionButton fab =
                 (FloatingActionButton) getActivity().findViewById(R.id.fab_edit_task_done);
         fab.setImageResource(R.drawable.ic_done);
@@ -83,6 +89,7 @@ public class AddEditTaskFragment extends Fragment implements AddEditTaskContract
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.i(TAG, "onCreateView ");
         View root = inflater.inflate(R.layout.addtask_frag, container, false);
         mTitle = (TextView) root.findViewById(R.id.add_task_title);
         mDescription = (TextView) root.findViewById(R.id.add_task_description);
@@ -92,27 +99,33 @@ public class AddEditTaskFragment extends Fragment implements AddEditTaskContract
 
     @Override
     public void showEmptyTaskError() {
+        Log.i(TAG, "showEmptyTaskError ");
         Snackbar.make(mTitle, getString(R.string.empty_task_message), Snackbar.LENGTH_LONG).show();
     }
 
     @Override
     public void showTasksList() {
+        Log.i(TAG, "showTasksList ");
+        //finish此页面,重新返回到 TasksFragment,这时会回调 TasksFragment 中的 onActivityResult方法
         getActivity().setResult(Activity.RESULT_OK);
         getActivity().finish();
     }
 
     @Override
     public void setTitle(String title) {
+        Log.i(TAG, "setTitle ");
         mTitle.setText(title);
     }
 
     @Override
     public void setDescription(String description) {
+        Log.i(TAG, "setDescription ");
         mDescription.setText(description);
     }
 
     @Override
     public boolean isActive() {
+        Log.i(TAG, "isActive ");
         return isAdded();
     }
 }

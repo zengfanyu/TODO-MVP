@@ -93,6 +93,9 @@ public class TasksActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         Log.i(TAG, "onSaveInstanceState ");
+
+        //此处需要保存的信息是当前 Task 列表展示界面展示的 Filter Type 信息,
+        // 目的是为了下一次重其他的页面跳回到此页面时,能够正确的显示 对应 Filter Type 的 Task
         outState.putSerializable(CURRENT_FILTERING_KEY, mTasksPresenter.getFiltering());
 
         super.onSaveInstanceState(outState);
@@ -111,6 +114,10 @@ public class TasksActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * 监听 DrawerLayout中的菜单栏的点击事件,也就是 NavigationView的菜单点击事件
+     * @param navigationView
+     */
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {

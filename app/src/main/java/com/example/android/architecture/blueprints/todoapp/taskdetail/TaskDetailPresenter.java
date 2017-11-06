@@ -18,6 +18,7 @@ package com.example.android.architecture.blueprints.todoapp.taskdetail;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.example.android.architecture.blueprints.todoapp.data.Task;
 import com.example.android.architecture.blueprints.todoapp.data.source.TasksDataSource;
@@ -32,6 +33,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class TaskDetailPresenter implements TaskDetailContract.Presenter {
 
+    private static final String TAG = "TODO-->TaskDetailP";
+
     private final TasksRepository mTasksRepository;
 
     private final TaskDetailContract.View mTaskDetailView;
@@ -42,6 +45,7 @@ public class TaskDetailPresenter implements TaskDetailContract.Presenter {
     public TaskDetailPresenter(@Nullable String taskId,
                                @NonNull TasksRepository tasksRepository,
                                @NonNull TaskDetailContract.View taskDetailView) {
+        Log.i(TAG, "TaskDetailPresenter " );
         mTaskId = taskId;
         mTasksRepository = checkNotNull(tasksRepository, "tasksRepository cannot be null!");
         mTaskDetailView = checkNotNull(taskDetailView, "taskDetailView cannot be null!");
@@ -51,6 +55,7 @@ public class TaskDetailPresenter implements TaskDetailContract.Presenter {
 
     @Override
     public void start() {
+        Log.i(TAG, "start " );
         openTask();
     }
 
@@ -89,6 +94,7 @@ public class TaskDetailPresenter implements TaskDetailContract.Presenter {
 
     @Override
     public void editTask() {
+        Log.i(TAG, "editTask " );
         if (Strings.isNullOrEmpty(mTaskId)) {
             mTaskDetailView.showMissingTask();
             return;
@@ -98,6 +104,7 @@ public class TaskDetailPresenter implements TaskDetailContract.Presenter {
 
     @Override
     public void deleteTask() {
+        Log.i(TAG, "deleteTask " );
         if (Strings.isNullOrEmpty(mTaskId)) {
             mTaskDetailView.showMissingTask();
             return;
@@ -108,6 +115,7 @@ public class TaskDetailPresenter implements TaskDetailContract.Presenter {
 
     @Override
     public void completeTask() {
+        Log.i(TAG, "completeTask " );
         if (Strings.isNullOrEmpty(mTaskId)) {
             mTaskDetailView.showMissingTask();
             return;
@@ -118,6 +126,7 @@ public class TaskDetailPresenter implements TaskDetailContract.Presenter {
 
     @Override
     public void activateTask() {
+        Log.i(TAG, "activateTask " );
         if (Strings.isNullOrEmpty(mTaskId)) {
             mTaskDetailView.showMissingTask();
             return;

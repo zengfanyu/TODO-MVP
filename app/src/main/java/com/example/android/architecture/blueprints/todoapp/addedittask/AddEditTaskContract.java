@@ -25,24 +25,51 @@ import com.example.android.architecture.blueprints.todoapp.BaseView;
 public interface AddEditTaskContract {
 
     interface View extends BaseView<Presenter> {
-
+        /**
+         * 既没有填写title也没有填写desc时,点击fab回调
+         */
         void showEmptyTaskError();
 
+        /**
+         * 结束此页面,回到 Task 展示页面中 的回调
+         */
         void showTasksList();
 
+        /**
+         * 设置Title内容的回调
+         *
+         * @param title title
+         */
         void setTitle(String title);
 
+        /**
+         * 展示Desc的回调
+         *
+         * @param description desx
+         */
         void setDescription(String description);
 
+        /**
+         * 判断Fragment当前状态的回调
+         * @return true fragment被添加到activity上  false 没有在Activity上了
+         */
         boolean isActive();
     }
 
     interface Presenter extends BasePresenter {
-
+        /**
+         * 保存或更新当前Task的回调
+         * @param title title
+         * @param description desc
+         */
         void saveTask(String title, String description);
 
         void populateTask();
 
+        /**
+         * Task数据是否丢失的回调
+         * @return
+         */
         boolean isDataMissing();
     }
 }

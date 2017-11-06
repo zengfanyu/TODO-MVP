@@ -65,7 +65,7 @@
 
     </LinearLayout>
 
-    <!-- Navigation Drawer -->
+    <!-- Navigation Drawer menu 指定了 Drawer的菜单项-->
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"

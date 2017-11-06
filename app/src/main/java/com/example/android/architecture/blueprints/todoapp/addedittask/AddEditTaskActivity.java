@@ -23,6 +23,7 @@ import android.support.test.espresso.IdlingResource;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 
 import com.example.android.architecture.blueprints.todoapp.Injection;
 import com.example.android.architecture.blueprints.todoapp.R;
@@ -33,6 +34,7 @@ import com.example.android.architecture.blueprints.todoapp.util.EspressoIdlingRe
  * Displays an add or edit task screen.
  */
 public class AddEditTaskActivity extends AppCompatActivity {
+    private static final String TAG = "TODO-->AddEditTasksA";
 
     public static final int REQUEST_ADD_TASK = 1;
 
@@ -46,7 +48,7 @@ public class AddEditTaskActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addtask_act);
-
+        Log.i(TAG, "onCreate " );
         // Set up the toolbar.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -82,7 +84,7 @@ public class AddEditTaskActivity extends AppCompatActivity {
             shouldLoadDataFromRepo = savedInstanceState.getBoolean(SHOULD_LOAD_DATA_FROM_REPO_KEY);
         }
 
-        // Create the presenter
+        // Create the presenter 初始化 Presenter
         mAddEditTaskPresenter = new AddEditTaskPresenter(
                 taskId,
                 Injection.provideTasksRepository(getApplicationContext()),
@@ -100,13 +102,20 @@ public class AddEditTaskActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        //保存状态
         // Save the state so that next time we know if we need to refresh data.
         outState.putBoolean(SHOULD_LOAD_DATA_FROM_REPO_KEY, mAddEditTaskPresenter.isDataMissing());
         super.onSaveInstanceState(outState);
+        Log.i(TAG, "onSaveInstanceState " );
     }
 
+    /**
+     * 这中操作就相当于 使用 onOptionsItemSelected ,然后当 item.getId()==android.R.id.home时 ,finish
+     * @return true if Up navigation completed successfully and this Activity was finished, false otherwise.
+     */
     @Override
     public boolean onSupportNavigateUp() {
+        Log.i(TAG, "onSupportNavigateUp " );
         onBackPressed();
         return true;
     }

@@ -50,7 +50,7 @@ public class TasksPresenter implements TasksContract.Presenter {
         Log.i(TAG, "TasksPresenter ");
         mTasksRepository = checkNotNull(tasksRepository, "tasksRepository cannot be null");
         mTasksView = checkNotNull(tasksView, "tasksView cannot be null!");
-
+        //在此处设置 View 对 Presenter 的引用
         mTasksView.setPresenter(this);
     }
 
@@ -93,7 +93,7 @@ public class TasksPresenter implements TasksContract.Presenter {
         // that the app is busy until the response is handled.
         EspressoIdlingResource.increment(); // App is busy until further notice
 
-        //此处就是通知 Model 层去获取数据然后返回 ,知识用 Repository 进行了封装
+        //此处就是通知 Model 层去获取数据然后返回 ,只是用 Repository 进行了封装
         mTasksRepository.getTasks(new TasksDataSource.LoadTasksCallback() {
             @Override
             public void onTasksLoaded(List<Task> tasks) {
@@ -107,7 +107,7 @@ public class TasksPresenter implements TasksContract.Presenter {
                 }
 
                 // We filter the tasks based on the requestType
-                //遍历所有的Task,根据当前的filter来决定要展示的Task
+                //遍历获取到的所有的Task,根据当前的filter来决定要展示的Task
                 for (Task task : tasks) {
                     switch (mCurrentFiltering) {
                         case ALL_TASKS:
@@ -160,6 +160,7 @@ public class TasksPresenter implements TasksContract.Presenter {
             //通知 View 层展示Task 的列表
             mTasksView.showTasks(tasks);
             // Set the filter label's text.
+            //此处设置的是Toolbar下方的TextView的显示内容,用于显示当前显示的 Filter Type
             showFilterLabel();
         }
     }
