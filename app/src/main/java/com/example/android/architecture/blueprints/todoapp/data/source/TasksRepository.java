@@ -16,8 +16,6 @@
 
 package com.example.android.architecture.blueprints.todoapp.data.source;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -28,6 +26,8 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Concrete implementation to load tasks from the data sources into a cache.
@@ -291,6 +291,11 @@ public class TasksRepository implements TasksDataSource {
         });
     }
 
+    /**
+     * 将从“服务器端”拿到的数据存入内存缓存中
+     *
+     * @param tasks “服务器端返回的数据”
+     */
     private void refreshCache(List<Task> tasks) {
         if (mCachedTasks == null) {
             mCachedTasks = new LinkedHashMap<>();
@@ -302,6 +307,11 @@ public class TasksRepository implements TasksDataSource {
         mCacheIsDirty = false;
     }
 
+    /**
+     * 将“服务器端”返回的数据存入本地缓存中
+     *
+     * @param tasks “服务器端” 返回的数据
+     */
     private void refreshLocalDataSource(List<Task> tasks) {
         mTasksLocalDataSource.deleteAllTasks();
         for (Task task : tasks) {

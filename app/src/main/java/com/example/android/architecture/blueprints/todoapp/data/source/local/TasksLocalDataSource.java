@@ -70,9 +70,10 @@ public class TasksLocalDataSource implements TasksDataSource {
                 TaskEntry.COLUMN_NAME_COMPLETED
         };
 
+        //get data from SQLite
         Cursor c = db.query(
                 TaskEntry.TABLE_NAME, projection, null, null, null, null, null);
-
+        //structure a Task object with data from db
         if (c != null && c.getCount() > 0) {
             while (c.moveToNext()) {
                 String itemId = c.getString(c.getColumnIndexOrThrow(TaskEntry.COLUMN_NAME_ENTRY_ID));
@@ -171,7 +172,7 @@ public class TasksLocalDataSource implements TasksDataSource {
 
         String selection = TaskEntry.COLUMN_NAME_ENTRY_ID + " LIKE ?";
         String[] selectionArgs = { task.getId() };
-
+        //更新 TaskEntry.COLUMN_NAME_ENTRY_ID 字段为task.getId()的数据的TaskEntry.COLUMN_NAME_COMPLETED字段为 true
         db.update(TaskEntry.TABLE_NAME, values, selection, selectionArgs);
 
         db.close();

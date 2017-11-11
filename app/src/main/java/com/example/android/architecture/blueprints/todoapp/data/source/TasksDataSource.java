@@ -46,25 +46,75 @@ public interface TasksDataSource {
         void onDataNotAvailable();
     }
 
+    /**
+     * 从对应的数据源（本地或者服务器）中获取所有数据的方法
+     *
+     * @param callback 获取数据的之后的回调接口
+     */
     void getTasks(@NonNull LoadTasksCallback callback);
 
+    /**
+     * 从对应的数据源（本地或者服务器）中获取指定 taskId 数据的方法
+     *
+     * @param taskId   指定数据的 taskId
+     * @param callback 获取数据之后的回调接口
+     */
     void getTask(@NonNull String taskId, @NonNull GetTaskCallback callback);
 
+    /**
+     * 保存数据的方法
+     *
+     * @param task
+     */
     void saveTask(@NonNull Task task);
 
+    /**
+     * 将task的状态设置为 complete
+     *
+     * @param task
+     */
     void completeTask(@NonNull Task task);
 
+    /**
+     * 将 id 为 taskId 的task的状态设置为 completed
+     *
+     * @param taskId
+     */
     void completeTask(@NonNull String taskId);
 
+    /**
+     * 将task的状态设置为 active
+     *
+     * @param task
+     */
     void activateTask(@NonNull Task task);
 
+    /**
+     * 将 id 为 taskId 的task的状态设置为 active
+     *
+     * @param taskId
+     */
     void activateTask(@NonNull String taskId);
 
+    /**
+     * 清除所有状态值为 completed 的task
+     */
     void clearCompletedTasks();
 
+    /**
+     * 刷新
+     */
     void refreshTasks();
 
+    /**
+     * 删除所有task
+     */
     void deleteAllTasks();
 
+    /**
+     * 删除制定 taskId 的task
+     *
+     * @param taskId
+     */
     void deleteTask(@NonNull String taskId);
 }

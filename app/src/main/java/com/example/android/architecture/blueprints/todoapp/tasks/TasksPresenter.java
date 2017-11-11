@@ -37,9 +37,13 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class TasksPresenter implements TasksContract.Presenter {
     private static final String TAG = "TODO-->TasksP";
-
+    /**
+     * 在此处充当model层对象
+     */
     private final TasksRepository mTasksRepository;
-
+    /**
+     * 在此处充当View层对象
+     */
     private final TasksContract.View mTasksView;
 
     private TasksFilterType mCurrentFiltering = TasksFilterType.ALL_TASKS;
