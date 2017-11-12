@@ -71,9 +71,11 @@ public class TasksLocalDataSource implements TasksDataSource {
         };
 
         //get data from SQLite
+        //重数据库中查询数据
         Cursor c = db.query(
                 TaskEntry.TABLE_NAME, projection, null, null, null, null, null);
         //structure a Task object with data from db
+        //用查询到的数据,构建一个 Task 对象
         if (c != null && c.getCount() > 0) {
             while (c.moveToNext()) {
                 String itemId = c.getString(c.getColumnIndexOrThrow(TaskEntry.COLUMN_NAME_ENTRY_ID));
@@ -96,6 +98,7 @@ public class TasksLocalDataSource implements TasksDataSource {
             // This will be called if the table is new or just empty.
             callback.onDataNotAvailable();
         } else {
+            //当重数据库中查询到了数据大于等于一条数据的时候,将数据回调出去
             callback.onTasksLoaded(tasks);
         }
 

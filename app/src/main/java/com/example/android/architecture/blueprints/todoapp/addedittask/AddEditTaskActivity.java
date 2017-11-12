@@ -32,6 +32,7 @@ import com.example.android.architecture.blueprints.todoapp.util.EspressoIdlingRe
 
 /**
  * Displays an add or edit task screen.
+ * 重两个方法可以到此页面,1. 在TaskFragment直接创建新的 Task ;2在TaskDetailFragment 对某一个现有的 task 再编辑
  */
 public class AddEditTaskActivity extends AppCompatActivity {
     private static final String TAG = "TODO-->AddEditTasksA";
@@ -48,7 +49,7 @@ public class AddEditTaskActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addtask_act);
-        Log.i(TAG, "onCreate " );
+        Log.i(TAG, "onCreate ");
         // Set up the toolbar.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -62,7 +63,7 @@ public class AddEditTaskActivity extends AppCompatActivity {
         String taskId = getIntent().getStringExtra(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID);
 
         setToolbarTitle(taskId);
-
+        //之前创建过一个task,当再次进入该task的时候,之前的editActivity没有消亡
         if (addEditTaskFragment == null) {
             addEditTaskFragment = AddEditTaskFragment.newInstance();
 
@@ -93,7 +94,7 @@ public class AddEditTaskActivity extends AppCompatActivity {
     }
 
     private void setToolbarTitle(@Nullable String taskId) {
-        if(taskId == null) {
+        if (taskId == null) {
             mActionBar.setTitle(R.string.add_task);
         } else {
             mActionBar.setTitle(R.string.edit_task);
@@ -106,16 +107,17 @@ public class AddEditTaskActivity extends AppCompatActivity {
         // Save the state so that next time we know if we need to refresh data.
         outState.putBoolean(SHOULD_LOAD_DATA_FROM_REPO_KEY, mAddEditTaskPresenter.isDataMissing());
         super.onSaveInstanceState(outState);
-        Log.i(TAG, "onSaveInstanceState " );
+        Log.i(TAG, "onSaveInstanceState ");
     }
 
     /**
      * 这中操作就相当于 使用 onOptionsItemSelected ,然后当 item.getId()==android.R.id.home时 ,finish
+     *
      * @return true if Up navigation completed successfully and this Activity was finished, false otherwise.
      */
     @Override
     public boolean onSupportNavigateUp() {
-        Log.i(TAG, "onSupportNavigateUp " );
+        Log.i(TAG, "onSupportNavigateUp ");
         onBackPressed();
         return true;
     }

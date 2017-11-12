@@ -97,6 +97,7 @@ public class TasksRepository implements TasksDataSource {
         checkNotNull(callback);
 
         // Respond immediately with cache if available and not dirty
+        //如果内存缓存中有数据，则直接回调出去
         if (mCachedTasks != null && !mCacheIsDirty) {
             callback.onTasksLoaded(new ArrayList<>(mCachedTasks.values()));
             return;
@@ -104,9 +105,11 @@ public class TasksRepository implements TasksDataSource {
 
         if (mCacheIsDirty) {
             // If the cache is dirty we need to fetch new data from the network.
+            //如果内存缓存中没数据了,那么从服务器端获取数据
             getTasksFromRemoteDataSource(callback);
         } else {
             // Query the local storage if available. If not, query the network.
+            //如果内存缓存中有数据,则从本地数据库获取数据
             mTasksLocalDataSource.getTasks(new LoadTasksCallback() {
                 @Override
                 public void onTasksLoaded(List<Task> tasks) {

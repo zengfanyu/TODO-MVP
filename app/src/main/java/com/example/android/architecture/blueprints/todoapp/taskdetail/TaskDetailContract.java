@@ -27,6 +27,7 @@ public interface TaskDetailContract {
     interface View extends BaseView<Presenter> {
         /**
          * 设置数据加载状态
+         *
          * @param active true 正在加载 false 没有加载
          */
         void setLoadingIndicator(boolean active);
@@ -43,6 +44,7 @@ public interface TaskDetailContract {
 
         /**
          * 显示待办事项Title
+         *
          * @param title TO DO Title
          */
         void showTitle(String title);
@@ -54,18 +56,21 @@ public interface TaskDetailContract {
 
         /**
          * 显示详情描述
+         *
          * @param description 详细描述的内容
          */
         void showDescription(String description);
 
         /**
          * 显示完成的状态
+         *
          * @param complete true 完成 false 未完成
          */
         void showCompletionStatus(boolean complete);
 
         /**
          * 显示编辑页面任务
+         *
          * @param taskId 任务Id
          */
         void showEditTask(String taskId);
@@ -87,19 +92,31 @@ public interface TaskDetailContract {
 
         /**
          * 当前活跃状态
+         *
          * @return true 活跃 false 销亡
          */
         boolean isActive();
     }
 
     interface Presenter extends BasePresenter {
-
+        /**
+         * 编辑当前的Task
+         */
         void editTask();
 
+        /**
+         * 删除当前Task
+         */
         void deleteTask();
 
+        /**
+         * 将当前Task设置为完成的状态
+         */
         void completeTask();
 
+        /**
+         * 将当前的Task设置为活跃的状态
+         */
         void activateTask();
     }
 }

@@ -45,7 +45,10 @@ public class TaskDetailActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         if (ab != null) {
+            // 给左上角图标的左边加上一个返回的图标 。对应ActionBar.DISPLAY_HOME_AS_UP
             ab.setDisplayHomeAsUpEnabled(true);
+            //使左上角图标是否显示，如果设成false，则没有程序图标，仅仅就个标题，否则，
+            // 显示应用程序图标，对应id为android.R.id.home，对应ActionBar.DISPLAY_SHOW_HOME
             ab.setDisplayShowHomeEnabled(true);
         }
 
